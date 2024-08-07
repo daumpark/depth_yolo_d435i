@@ -4,37 +4,26 @@
   <!-- Realsense D435i -->
   <include file="$(find realsense2_camera)/launch/rs_rgbd.launch">
     <arg name="enable_pointcloud" value="true"/>
+    <arg name="depth_width" value="640"/> <!-- 낮춘 해상도 -->
+    <arg name="depth_height" value="480"/> <!-- 낮춘 해상도 -->
+    <arg name="depth_fps" value="15"/> <!-- 낮춘 프레임 속도 -->
+    <arg name="color_width" value="640"/> <!-- 낮춘 해상도 -->
+    <arg name="color_height" value="480"/> <!-- 낮춘 해상도 -->
+    <arg name="color_fps" value="15"/> <!-- 낮춘 프레임 속도 -->
+    <param name="queue_size" value="10"/> <!-- 큐 크기 조정 -->
   </include>
 
   <!-- Console launch prefix -->
   <arg name="launch_prefix" default=""/>
 
-  <!-- Config and weights folder. -->
-  <arg name="yolo_weights_path"          default="$(find darknet_ros)/yolo_network_config/weights"/>
-  <arg name="yolo_config_path"           default="$(find darknet_ros)/yolo_network_config/cfg"/>
-
-  <!-- ROS and network parameter files -->
-  <arg name="ros_param_file"             default="$(find darknet_ros)/config/ros.yaml"/>
-  <arg name="network_param_file"         default="$(find darknet_ros)/config/yolov3.yaml"/>
-
-  <!-- Load parameters -->
-  <rosparam command="load" ns="darknet_ros" file="$(arg ros_param_file)"/>
-  <rosparam command="load" ns="darknet_ros" file="$(arg network_param_file)"/>
-
-  <!-- Start darknet and ros wrapper -->
-  <node pkg="darknet_ros" type="darknet_ros" name="darknet_ros" output="screen" launch-prefix="$(arg launch_prefix)">
-    <param name="weights_path"          value="$(arg yolo_weights_path)" />
-    <param name="config_path"           value="$(arg yolo_config_path)" />
-  </node>
-
   <!-- Depth Combination -->
-  <node pkg="depth_yolo" type="depth_combination.py" name="depth_combination" />
+  <node pkg="depth_yolo" type="depth_combination.py" name="depth_combination" output="screen" />
 
   <!-- Static TF -->
   <node pkg="tf" type="static_transform_publisher" name="camera_link_to_camera_color_optical_frame"
-    args="0 0 0 -1.57 0 -1.57 /camera_link /camera_color_optical_frame 100" />
+    args="0 0.02375 0 -1.57 0 -1.57 /camera_link /camera_color_optical_frame 100" />
 
    <!-- RVIZ -->
   <node pkg="rviz" type="rviz" name="rviz"
-    args="-d $(find depth_yolo)/rviz/depth_yolo.rviz" />
+    args="-d $(find depth_yolo)/rviz/test.rviz" />
 </launch>
