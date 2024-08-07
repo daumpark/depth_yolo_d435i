@@ -19,7 +19,9 @@ pip install ros_numpy
 pip install ultralytics
 ```
 https://dev.intelrealsense.com/docs/compiling-librealsense-for-linux-ubuntu-guide
+
 https://github.com/pal-robotics/ddynamic_reconfigure.git
+
 https://github.com/IntelRealSense/realsense-ros/tree/ros1-legacy
 
 ## step2 install depth_yolo
