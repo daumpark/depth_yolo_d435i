@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>depth_yolo</name>
+  <name>depth_v8</name>
   <version>0.0.0</version>
   <description>The depth_yolo package</description>
 

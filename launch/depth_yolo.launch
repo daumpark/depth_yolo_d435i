@@ -17,7 +17,7 @@
   <arg name="launch_prefix" default=""/>
 
   <!-- Depth Combination -->
-  <node pkg="depth_yolo" type="depth_combination.py" name="depth_combination" output="screen" />
+  <node pkg="depth_v8" type="depth_combination.py" name="depth_combination" output="screen" />
 
   <!-- Static TF -->
   <node pkg="tf" type="static_transform_publisher" name="camera_link_to_camera_color_optical_frame"
@@ -25,5 +25,5 @@
 
    <!-- RVIZ -->
   <node pkg="rviz" type="rviz" name="rviz"
-    args="-d $(find depth_yolo)/rviz/test.rviz" />
+    args="-d $(find depth_v8)/rviz/test.rviz" />
 </launch>
