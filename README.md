@@ -10,8 +10,6 @@ This is a package combining darknet_ros and iai_kinect2 in order to get the 3D l
 
 It will automatically send tf transforms between the objects detected and kinect2_link.
 
-![b](imgs/b.jpeg)
-
 # Installation
 ## step1 Install dependencies
 1. Remember to downgrade the gcc and g++ version of your system to 7 (my Ubuntu 20.04 is default 8)
