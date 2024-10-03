@@ -17,8 +17,8 @@
   <arg name="launch_prefix" default=""/>
 
   <!-- Depth Combination -->
-  <node pkg="depth_v8" type="depth_combination.py" name="depth_combination" output="screen" />
-  <!-- <node pkg="depth_v8" type="detect_only_one.py" name="detect_only_one" output="screen" /> -->
+  <!-- <node pkg="depth_v8" type="depth_combination.py" name="depth_combination" output="screen" /> -->
+  <node pkg="depth_v8" type="detect_only_one.py" name="detect_only_one" output="screen" />
 
   <!-- Static TF -->
   <!-- <node pkg="tf" type="static_transform_publisher" name="camera_link_to_camera_color_optical_frame"

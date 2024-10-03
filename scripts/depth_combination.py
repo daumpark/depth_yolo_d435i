@@ -24,12 +24,14 @@ import math
 import tf
 from sensor_msgs.msg import Image
 from ultralytics import YOLO
+import os
 
 height = 480
 width = 640
 if_pcl_ready = 0
 parent_frame = "camera_color_optical_frame"
-detection_model = YOLO("yolov8m.pt")
+detection_model = YOLO(os.path.join(os.path.dirname(__file__), 'object_n.pt'))
+# detection_model = YOLO('yolov8m.pt')
 det_image_pub = rospy.Publisher("/ultralytics/detection/image", Image, queue_size=5)
 class_names = detection_model.names
 
@@ -40,7 +42,7 @@ def image_callback(data):
     if det_image_pub.get_num_connections():
         det_result = detection_model(array)
         det_annotated = det_result[0].plot(show=False)
-        det_image_pub.publish(ros_numpy.msgify(Image, det_annotated, encoding="rgb8"))
+        det_image_pub.publish(ros_numpy.msgify(Image, det_annotated, encoding="rgb8")) #rgb8
         obj_tf = tf.TransformBroadcaster()
         if(if_pcl_ready):
             bounding_boxes = det_result[0].boxes
@@ -84,7 +86,8 @@ def depth_callback(data):
 def listener():
     rospy.init_node('depth_combination', anonymous=True)
     rospy.Subscriber("/camera/depth_registered/points", PointCloud2, depth_callback)
-    rospy.Subscriber("/camera/color/image_rect_color", Image, image_callback)
+    rospy.Subscriber("/camera/color/image_raw", Image, image_callback)
+    # rospy.Subscriber("/camera/color/image_rect_color", Image, image_callback)
     rospy.spin()
 
 if __name__ == '__main__':
